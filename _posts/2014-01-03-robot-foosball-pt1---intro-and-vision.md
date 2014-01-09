@@ -159,6 +159,11 @@ Player angles are then determined from y-positions we just found. Notice the red
 
 Note: You will notice 
 
+![Image 5](/images/foosball_pt1_tracking_1.png)
+
+# Ball Tracking
+
+# Demo
 
 
 
