@@ -193,7 +193,7 @@ while (!isShutdown) {
 }
 {% endhighlight %}
 
-The whole thing took on average 55ms which really made visualization seem a bit slow. I decided to multi-thread the the ball position calculation by splitting it up into 5 regions where the divider was the player bar. Each region would calculate its own lowest scoring PotentialPositionRectangle and in the end I'd pick the best of the five. This is possible because the ball can't be seen when its directly under the bar and the original algorithm would have chosen the side where the ball was sticking out the most anyway, so there's little difference between the results of the two. The new code resulted in both the player and ball position calculations finishing in ~15ms and the visualiztion was much more fluid.
+The whole thing took on average 55ms which really made visualization seem a bit slow. I decided to multi-thread the the ball position calculation by splitting it up into 5 regions where the divider was the player bar. Each region would calculate its own lowest scoring PotentialPositionRectangle and in the end I'd pick the best of the 5. This is possible because the ball can't be seen when its directly under the bar and the original algorithm would have chosen the side where the ball was sticking out the most anyway, so there's little difference between the results of the two. The new code resulted in both the player and ball position calculations finishing in ~15ms and the visualiztion was much more fluid.
 
 {% highlight java %}
 while (!isShutdown) {
@@ -213,10 +213,11 @@ while (!isShutdown) {
 {% endhighlight %}
 
 # Demo
-
-
+<center>
+    <iframe src="//player.vimeo.com/video/83826553" width="720" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</center>
 
 [MT]: http://macrotrackerapp.com
 [table]: http://www.amazon.com/Mini-Table-Top-Foosball-Everything/dp/B003YHD1DE
 [macam]: http://webcam-osx.sourceforge.net/
-
+[github]: https://github.com/somesaba/foosball
