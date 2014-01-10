@@ -6,7 +6,7 @@ category: posts
 
 # Introduction
 
-Months ago, while burning the midnight oil at work for a late-night release, my team and I would take short foosball breaks when we had to wait for our servers to warm their caches. After one such escapade, my boss mentioned how cool it would be to build a foosball playing robot for the company's next hackathon. The fatigue from the day instantly faded. My persistent desire to build and create things that challenge my creativity had been unsatisfied for far too long. This had driven me to create [MacroTracker][MT], but this time I wanted to build something tangible and I wanted it to have some AI. Autonomous foosball was the perfect answer!
+Months ago, while burning the midnight oil at work for a late-night release, my team and I would take short foosball breaks when we had to wait for our servers to warm their caches. After one such escapade, my boss mentioned how cool it would be to build a foosball playing robot for the company's next hackathon. The fatigue from the day instantly faded. My persistent desire to build and create had been unsatisfied for far too long. I produced [MacroTracker][MT] earlier in the year, but this time I wanted to build something tangible and I wanted it to have AI. Autonomous foosball was the perfect answer!
 
 I broke the project down into 3 milestones. First was the vision aspect, convert the images captured by the camera to some grid-based gamestate object and display it next to the raw camera feed. Second, I needed to complete the hardware and mechanics to control the players. Finally, I needed to write the AI to control the players, specifically I wanted it to learn how to play on its own with Q-learning or perhaps some sort of policy-search. All the code is available on my [github][github].
 
@@ -193,7 +193,7 @@ while (!isShutdown) {
 }
 {% endhighlight %}
 
-The whole thing took on average 55ms which really made visualization seem a bit slow. I decided to multi-thread the the ball position calculation by splitting it up into 5 regions where the divider was the player bar. Each region would calculate its own lowest scoring PotentialPositionRectangle and in the end I'd pick the best of the 5. This is possible because the ball can't be seen when its directly under the bar and the original algorithm would have chosen the side where the ball was sticking out the most anyway, so there's little difference between the results of the two. The new code resulted in both the player and ball position calculations finishing in ~15ms and the visualiztion was much more fluid.
+The whole thing took on average 55ms which made visualization seem a bit slow. I decided to multi-thread the the ball position calculation by splitting it up into 5 regions where the divider was the player bar. Each region would calculate its own lowest scoring PotentialPositionRectangle and in the end it picks the best of the 5. This is possible because the ball can't be seen when its directly under the bar and the original algorithm would have chosen the side where the ball was sticking out the most anyway, so there's little difference between the results of the two. The new code calculates the player and ball position within ~15ms and the visualiztion is much more fluid.
 
 {% highlight java %}
 while (!isShutdown) {
