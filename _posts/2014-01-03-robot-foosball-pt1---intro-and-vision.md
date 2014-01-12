@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Robot Foosball Pt.1   Intro and Vision"
+title: "Robot Foosball Part 1: Intro and Vision"
 category: posts
 ---
 
@@ -44,7 +44,7 @@ I cheated even more. If you compare the image above with the image of the origin
 
 # Model
 
-The state of a foosball game can be modeled by a 2D grid with position data for the players and the balls. The ball is free to move anywhere on this grid so its position can be repsented by an x,y coordinate. The players however are limited to one axis, on which they are free to rotate or slide (in my case the y-axis). Furthermore, the players are also fixed in number as well as relative distances between each other. This nature allows me to divide the gameState into static and dynamic properties. The static properties are the size of the 2D grid, the number of players per row, the distance between players for each row, and finally the x-coordinates for each row. The dynamic properties are essentially the x,y-coorindates of the ball, the y-coordinates of one player (in my case the bottom player) for each row, as well the the player angle for each row. (Note: My model is missing a list of controllable rows). I further discretized the PlayerAngle into an enum with 5 possible states (see below). The horizontal angles allow the ball to pass underneath whereas the others do not. Lastly, the playerTheScored property is used to determine if the game is over and if so, who had scored, it remains null while the game is live.
+The state of a foosball game can be modeled by a 2D grid with position data for the players and the balls. The ball is free to move anywhere on this grid so its position can be repsented by an x,y coordinate. The players however are limited to one axis, on which they are free to rotate or slide (in my case the y-axis). Furthermore, the players are also fixed in number as well as relative distances between each other. This nature allows me to divide the gameState into static and dynamic properties. The static properties are the size of the 2D grid, the number of players per row, the distance between players for each row, and finally the x-coordinates for each row. The size of gameState was set to 320x240 (same as the output of the webcam) and the other static properties were determined manually afterwards. The dynamic properties are essentially the x,y-coorindates of the ball, the y-coordinates of one player (in my case the bottom player) for each row, as well the the player angle for each row. (Note: My model is missing a list of controllable rows). I further discretized the PlayerAngle into an enum with 5 possible states (see below). The horizontal angles allow the ball to pass underneath whereas the others do not. Lastly, the playerTheScored property is used to determine if the game is over and if so, who had scored, it remains null while the game is live.
 
 {% highlight java %}
 public class GameState {
