@@ -95,6 +95,12 @@ The angular servos are free to move 0 to 180 degrees, however you may realize th
 
 # Demo
 
+The following video will demonstrate how the servos control the players.
+
+<center>
+    <iframe src="//player.vimeo.com/video/84103073" width="720" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</center>
+
 The MirrorAgent in the demo will match what the opposing player does.
 {% highlight java %}
 public class MirrorAgent extends AbstractFoosballAgent {
