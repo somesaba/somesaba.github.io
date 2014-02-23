@@ -187,7 +187,7 @@ while (!isShutdown) {
     this.updatePlayerPositions(img);
 
     // Update Ball Position in current thread (~40-50ms)
-    this.updateBallPosition(potentialBallPositions);
+    this.updateBallPosition(img);
 
     notifyListeners();
 }
