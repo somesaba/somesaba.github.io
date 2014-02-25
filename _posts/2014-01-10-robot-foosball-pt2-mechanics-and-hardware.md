@@ -6,11 +6,11 @@ category: posts
 
 # Introduction
 
-I need to warn you that I have a very limited set of tools at my disposal. Namely, a drill, a hand saw, pliers, and screw drivers. One day I will build CAD models of my designs and machine them to perfection, but for now, I need to improvise so don't judge my handywork!
+I need to warn you that I have a very limited set of tools at my disposal. Namely, a drill, a hand saw, pliers, and screw drivers. One day I will build CAD models of my designs and machine them to perfection, but for now, I need to improvise so don't judge my handy-work!
 
 # Parts
 
-I already had an Arduino Uno from a different project, so to save money, I decided to reuse it for this one. The big decision now was selecting the right servos to control the players. The most important factor for me was speed. After browsing through all the servos at [servo city][servos], I selected a few based on their speed and price. To my dissapointment I had discovered that many servos (especially the fast ones) were limited to 90 degrees of rotation as opposed to 180. Servo city charges $10 to reprogram the servos for 180 degree rotation, or I can buy a programmer myself. Among the three available programmers priced at $25, $50, and $70, I would only be able to use the latter one because the cheaper ones must be connected to a computer running software that's only available for Windows. Fortunately, I soon discovered that the rotation limits were only applicable to the digital servos so I selected the [Hitec HS-225MG][servo], an analog servo capable of rotating 60 degrees in 110ms and priced at $25. I followed up that purchase with more aluminum from the hardware store and began the fun!
+I already had an Arduino Uno from a different project, so to save money, I decided to reuse it for this one. The big decision now was selecting the right servos to control the players. The most important factor for me was speed. After browsing through all the servos at [servo city][servos], I selected a few based on their speed and price. To my disappointment I had discovered that many servos (especially the fast ones) were limited to 90 degrees of rotation as opposed to 180. Servo city charges $10 to reprogram the servos for 180 degree rotation, or I can buy a programmer myself. Among the three available programmers priced at $25, $50, and $70, I would only be able to use the latter one because the cheaper ones must be connected to a computer running software that's only available for Windows. Fortunately, I soon discovered that the rotation limits were only applicable to the digital servos so I selected the [Hitec HS-225MG][servo], an analog servo capable of rotating 60 degrees in 110ms and priced at $25. I followed up that purchase with more aluminum from the hardware store and began the fun!
 
 # Setup
 
@@ -28,7 +28,7 @@ As excepted, this did not work too well. After a few hits the player angles shif
 ![Image 4](/images/foosball_pt2_setup_5.jpg)
 ![Image 5](/images/foosball_pt2_setup_3.jpg)
 
-It wasn't long before I constructed the mount for the other player rod, attached the arduino onto the table, and conntected all the servos to the bread board.
+It wasn't long before I constructed the mount for the other player rod, attached the arduino onto the table, and connected all the servos to the bread board.
 
 ![Image 6](/images/foosball_pt2_setup_6.jpg)
 

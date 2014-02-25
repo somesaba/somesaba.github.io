@@ -9,12 +9,12 @@ category: posts
 From my (basic) understanding of machine learning there's the following:
 
 <ul>
-  <li>Supervised Learning - Given some labelled data, learn a general function to determine the labels for that data without overfitting. E.g. Classification and Regression</li>
-  <li>Unsupervised Learning - Given some unlabelled data, find structure in the data. E.g. Clustering and Baum-Welch</li>
+  <li>Supervised Learning - Given some labeled data, learn a general function to determine the labels for that data without over-fitting. E.g. Classification and Regression</li>
+  <li>Unsupervised Learning - Given some unlabeled data, find structure in the data. E.g. Clustering and Baum-Welch</li>
   <li>Reinforcement Learning - Given some environment, perform actions to observe the consequences. Use these experiences to learn the appropriate actions to maximize expected reward. E.g. Q-Learning and Policy Search</li>
 </ul>
 
-The project was my chance to dabble in a real-world application of Reinforcement Learning. I will start by introducing some of the basic ideas behind Reinforcement Learning before talking about my experience in applying it to my foosball robot. The majority of this information is available through [Edx's course on aritifial intelligence][edx], a class I had the privelage of taking in person while I was a student a UC Berkeley. If you find this post interesting, you will do yourself more justice taking the online class since this post almost serves as my own personal cliff notes of one small section of the class. Remember all the code is available on my [github][github].
+The project was my chance to dabble in a real-world application of Reinforcement Learning. I will start by introducing some of the basic ideas behind Reinforcement Learning before talking about my experience in applying it to my foosball robot. The majority of this information is available through [Edx's course on artificial intelligencee][edx], a class I had the privilege of taking in person while I was a student a UC Berkeley. If you find this post interesting, you will do yourself more justice taking the online class since this post almost serves as my own personal cliff notes of one small section of the class. Remember all the code is available on my [github][github].
 
 # Markov decision process
 
@@ -35,7 +35,7 @@ The image above from [Wikipedia][wikimg] portrays an example of an MDP. MDPs all
 
 # Model Based Learning
 
-As you can see in the diagram above, taking an action from a green colored state results in an orange colored "probabilastic state" where the outcome is nondeterministic. There's a 70% chance that taking action a_0 from state S_1 will result in a +5 reward and end in state S_0, a 20% chance you will end up in state S_2, and a 10% chance that nothing will change. These orange-states are call Q-states and in order for us to write algorithms using MDPs we need to be able to quanitfy their values. If we think about it intuitively, what would be the value of action a_0 from state S_1? Well, we know there's a 70% chance of getting a reward of 5, etc...How about .70(value of state S_0 + 5 reward) + .20(value of state S_2) + .10(value of state S_0)? The value of a Q-state (Q-value) can be defined as the weighted sum over all possible transistion states of the rewards plus future (discounted) values of the new state, where the weights are the probabilities of each transition:
+As you can see in the diagram above, taking an action from a green colored state results in an orange colored "probabilistic state" where the outcome is nondeterministic. There's a 70% chance that taking action a_0 from state S_1 will result in a +5 reward and end in state S_0, a 20% chance you will end up in state S_2, and a 10% chance that nothing will change. These orange-states are call Q-states and in order for us to write algorithms using MDPs we need to be able to quantify their values. If we think about it intuitively, what would be the value of action a_0 from state S_1? Well, we know there's a 70% chance of getting a reward of 5, etc...How about .70(value of state S_0 + 5 reward) + .20(value of state S_2) + .10(value of state S_0)? The value of a Q-state (Q-value) can be defined as the weighted sum over all possible transition states of the rewards plus future (discounted) values of the new state, where the weights are the probabilities of each transition:
 
 $$
 \begin{align}
@@ -52,7 +52,7 @@ $$
 \end{align}
 $$
 
-Note: Gamma in these equations can represent greediness. If gamma is 0 the Q-value becomes a weighted sum of the rewards. In our example the Q_value(S_1, a_0) would just be .70(5 reward) if gamma was 0. That means we don't care if an action gets us killed, as long as we get the largest instanenous reward between all the other actions. Alernatively, the higher gamma is, the more we consider our future prospects. I keep gamma at .99 for this project.
+Note: Gamma in these equations can represent greediness. If gamma is 0 the Q-value becomes a weighted sum of the rewards. In our example the Q_value(S_1, a_0) would just be .70(5 reward) if gamma was 0. That means we don't care if an action gets us killed, as long as we get the largest instantaneous reward between all the other actions. Alternatively, the higher gamma is, the more we consider our future prospects. I keep gamma at .99 for this project.
 
 Now that we can quantify states and actions, we can run an algorithm called [Value Iteration][valueit] to determine the optimal state values:
 
@@ -64,7 +64,7 @@ $$
 \end{align}
 $$
 
-Value Iteration allows us to determine optimal values as well as the optimal policy for a given state. However, in order to determine the best action given the value of a state, we have to do a bit of work. Calculating the actions from values is called policy extraction and requires you to use the known optimal values, transition probabilites, and rewards to compute the best action. Remeber a policy, is just a mapping of states to actions, a table we can use to determine what actions to take given a state.
+Value Iteration allows us to determine optimal values as well as the optimal policy for a given state. However, in order to determine the best action given the value of a state, we have to do a bit of work. Calculating the actions from values is called policy extraction and requires you to use the known optimal values, transition probabilities, and rewards to compute the best action. Remember a policy, is just a mapping of states to actions, a table we can use to determine what actions to take given a state.
 
 $$
 \begin{align}
@@ -82,7 +82,7 @@ $$
 \end{align}
 $$
 
-Policy Evalution is similar to Value Iteration, except you do not take a max over the available actions because you are limited to your policy:
+Policy Evaluation is similar to Value Iteration, except you do not take a max over the available actions because you are limited to your policy:
 
 $$
 \begin{align}
@@ -100,7 +100,7 @@ Value Iteration and Policy Iteration are great for when you know the all the par
 
 In the general case, it is certainly possible to learn those parameters through machine learning but spending the time learning the parameters seems wasted when that only gets you half way there (you still have to run policy or value iteration).
 
-Fortunately there is a better way! Instead of learning the parameters of the MDP we could try estimating the state values by sampling actions in the actual envirnment; take an action according to some policy, experience the instaneous reward, and use that to update your estimate of the state value. This is called temporal difference learning.
+Fortunately there is a better way! Instead of learning the parameters of the MDP we could try estimating the state values by sampling actions in the actual environment; take an action according to some policy, experience the instantaneous reward, and use that to update your estimate of the state value. This is called temporal difference learning.
 
 $$
 \begin{align}
@@ -117,7 +117,7 @@ $$
 \end{align}
 $$
 
-Remember policy extraction takes a bit of work and it requires us to know the reward and state transistion probabilities for the MDP. We've taken a model-free approach to learning the state values (for a policy), but we can't use this knowledge to improve our policy! We can't use policy extraction unless we also sample tranisition probablities and rewards, but we had just decided that was a waste of time...
+Remember policy extraction takes a bit of work and it requires us to know the reward and state transition probabilities for the MDP. We've taken a model-free approach to learning the state values (for a policy), but we can't use this knowledge to improve our policy! We can't use policy extraction unless we also sample transition probabilities and rewards, but we had just decided that was a waste of time...
 
 Let's go back to the drawing board. Why did we want state values in the first place? Because we're trying to find the optimal policy. If you look at the equation for policy extraction, it doesn't really seem to fit well with state values. It almost seems to fit better with.... Q-values! Wait a second...look at the first equation where I define the Q-value for a state.
 
@@ -136,7 +136,7 @@ $$
 \end{align}
 $$
 
-This is Q-learning and this time we get control over which actions to take, where-as with estimated state-values we were limited to a fixed policy (that we couldn't improve). Q-learing is awesome becuase it will converge to the optimal Q-values (and therefore policy). Except you have to make sure you explore enough (state and actions) and remember to lower the learning rate (alpha) over time. Since Q-learning will converge to optimal values, it just becomes a question of how fast can I converge which is really a question of exploration vs exploitation (how do I chose which actions to take). That problem can be solved many ways, a simple solution is to take a random action with some probability, epsilon, or otherwise take the best action according to your Q-values. You can also start with some high value for epsilon and decrease it over time. Here's the basic algorithm for Q-learning:
+This is Q-learning and this time we get control over which actions to take, where-as with estimated state-values we were limited to a fixed policy (that we couldn't improve). Q-learning is awesome because it will converge to the optimal Q-values (and therefore policy). Except you have to make sure you explore enough (state and actions) and remember to lower the learning rate (alpha) over time. Since Q-learning will converge to optimal values, it just becomes a question of how fast can I converge which is really a question of exploration vs exploitation (how do I chose which actions to take). That problem can be solved many ways, a simple solution is to take a random action with some probability, epsilon, or otherwise take the best action according to your Q-values. You can also start with some high value for epsilon and decrease it over time. Here's the basic algorithm for Q-learning:
 
 $$
 \begin{align}
@@ -153,7 +153,7 @@ There's still one problem (I promise this is the last one)! Consider the two foo
 ![Image 2](/images/foosball_pt3_1.jpg)
 ![Image 3](/images/foosball_pt3_2.jpg)
 
-In both cases the agent should probably hit the ball right? Let's assume the first image is a state we've already visted many times and know the best course of action is to hit the ball. The second image however is entirely new and the agent has no idea what to do. The problem here is that we have no way of transfering experiences between similar states. We have to visit every state-action pair combination to learn the optimal values and in foosball that would be:
+In both cases the agent should probably hit the ball right? Let's assume the first image is a state we've already visited many times and know the best course of action is to hit the ball. The second image however is entirely new and the agent has no idea what to do. The problem here is that we have no way of transferring experiences between similar states. We have to visit every state-action pair combination to learn the optimal values and in foosball that would be:
 
 $$
 \begin{align}
@@ -161,9 +161,9 @@ $$
 \end{align}
 $$
 
-That's 122 trillion states and that doesn't even include Q-states. Ain't nobody got time OR space for that. It would take forever to visit all those states and we probaly don't have enough memory to store all of the Q-values.  There must be a better way!
+That's 122 trillion states and that doesn't even include Q-states. Ain't nobody got time OR space for that. It would take forever to visit all those states and we probably don't have enough memory to store all of the Q-values.  There must be a better way!
 
-The idea is to mathematically represent states as a linear combination of weights and features, that way we can generalize and transfer experinces between simiar states. Features are meant to describe certain characteristics of a state, or in our case, a Q-state, which means we are describing state-action pairs. One feature can represent the possibility of hitting the ball, another feature can represent the possibility of allowing the enemy to score a goal. As the agent learns it adjusts the weights associated with each feature. For example, if the enemy were to score on the agent (which results in a negative reward) while the second feature I mentioned was active, then we would lower the weight for that feature based on the difference between the estimated value for the Q-state and actual (negative) reward we had just recieved. This is called approximate Q-learning and the algorithm is as follows:
+The idea is to mathematically represent states as a linear combination of weights and features, that way we can generalize and transfer experiences between similar states. Features are meant to describe certain characteristics of a state, or in our case, a Q-state, which means we are describing state-action pairs. One feature can represent the possibility of hitting the ball, another feature can represent the possibility of allowing the enemy to score a goal. As the agent learns it adjusts the weights associated with each feature. For example, if the enemy were to score on the agent (which results in a negative reward) while the second feature I mentioned was active, then we would lower the weight for that feature based on the difference between the estimated value for the Q-state and actual (negative) reward we had just received. This is called approximate Q-learning and the algorithm is as follows:
 
 $$
 \begin{align}
@@ -182,11 +182,11 @@ $$
 \end{align}
 $$
 
-When you update the weights in step 3, you are essentially "correcting" them. The correction is the difference between what we thought the Q-value was for the action we took with the actual reward we received plus the best possible (discounted) Q-value for the new state. Those two numbers should be fairly close. You will also notice that we downweight the correction by alpha, our learning rate and upscale the correction by the actual feature value. The larger (or more prominent) a feature is, the larger it is rewarded for doing good and harsher it is punished for doing bad.
+When you update the weights in step 3, you are essentially "correcting" them. The correction is the difference between what we thought the Q-value was for the action we took with the actual reward we received plus the best possible (discounted) Q-value for the new state. Those two numbers should be fairly close. You will also notice that we down-weight the correction by alpha, our learning rate and upscale the correction by the actual feature value. The larger (or more prominent) a feature is, the larger it is rewarded for doing good and harsher it is punished for doing bad.
 
 #Implementation
 
-Implementing approximate Q-learning in my foosball robot turned out to be more difficult than I anticipated. I spent days tweeking the rewards, playing around with many different features, until I was able to get the agent to learn something worth showing. The performAction method runs (more or less) every time the vision algorithm updates the gameState if agent is not still doing its thing.
+Implementing approximate Q-learning in my foosball robot turned out to be more difficult than I anticipated. I spent days tweaking the rewards, playing around with many different features, until I was able to get the agent to learn something worth showing. The performAction method runs (more or less) every time the vision algorithm updates the gameState if agent is not still doing its thing.
 
 {% highlight java %}
 public class ApproximateQLearningAgent extends AbstractFoosballAgent {
@@ -223,9 +223,9 @@ public class ApproximateQLearningAgent extends AbstractFoosballAgent {
 }  
 {% endhighlight java %}
 
-The update weights method is shown below. At this point we are in state s' and will recieve our reward from the previous action. To update the weights, we find the best possible Q-value by iterating over every possible action, and calculating the Q-value with those actions, the current state, and feature weights. 
+The update weights method is shown below. At this point we are in state s' and will receive our reward from the previous action. To update the weights, we find the best possible Q-value by iterating over every possible action, and calculating the Q-value with those actions, the current state, and feature weights. 
 
-Note: while there are approximately 80 discrete y-positions the bottom player can be in, I've reduced this to 40 because there are only 40 possible servo angles and it will signifigantly cut down the number of possible actions I need to iterate through.
+Note: while there are approximately 80 discrete y-positions the bottom player can be in, I've reduced this to 40 because there are only 40 possible servo angles and it will significantly cut down the number of possible actions I need to iterate through.
 
 {% highlight java %}
 private void updateWeights() {
@@ -262,7 +262,7 @@ Before I talk about the specific rewards and features used in the demo video I w
   * When you take a non-random action make sure you randomly pick between all actions that had the highest Q-value
   * Keep your feature values between [0,1] otherwise the update step will cause wild fluctuations in weights. Mine are binary. Put another way, normalize your features.
   * Remember that feature values are supposed to characterize state-action pairs (repeat this to yourself)
-  * Instanaeous rewards are very important for learning, do not rely on end-state rewards (such as goals)
+  * Instantaneous rewards are very important for learning, do not rely on end-state rewards (such as goals)
   * Your agent will not perform actions that are not featured/rewarded
   * Start with 1 feature/reward before adding more (baby steps!)
 
@@ -270,7 +270,7 @@ I reward the agent for keeping players in line with the ball, for blocking incom
 
 # Demo
 
-This video below shows some training matches. It is certainly far from perfect, since there are so many actions avaiable to the agent, it can take up to 1 second to calculate the 40,000 Q-values (twice), so I have to hit the ball slow. I wish I had a more powerful computer :)
+This video below shows some training matches. It is certainly far from perfect, since there are so many actions available to the agent, it can take up to 1 second to calculate the 40,000 Q-values (twice), so I have to hit the ball slow. I wish I had a more powerful computer :)
 
 <center>
     <iframe src="//player.vimeo.com/video/87372482" width="720" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -278,7 +278,7 @@ This video below shows some training matches. It is certainly far from perfect, 
 
 # Conclusions
 
-My goal with this project was to implement reinforcement learning in a physical environment and get it to work reasonably well. Physical environments are lot harder than simulations due to noise and uncertainty. Nonetheless, I think I've accomplished my goal and I have certainly learned alot. However, the project is not without pitfalls. The agent certainly behaves as expected, but not without noticiable issues, a lot of which can be traced back to noise. Also the large action-space makes it difficult to calculate the next action quickly enough, but a faster computer would easily fix this. If I spend more time improving all aspects of this project (better foosball table, vision algorithm, faster computer, noise reduction), I can probably get the robot to always block an incoming ball, hit the ball forward, etc. But that's not necessarily how you play foosball, and what happens if the ball gets stuck in the corner (like it did in the video)? Of course I can improve my features, notice how none of my features even consider the enemy position, but I can only go so far with additional features. This is where my model starts to shows its weakness. In foosball, actions are much more complex than just "angle players forward". Real actions in foosball, are a string of actions in my model. For example, the action "slide the ball over then hit it" or "bounce the ball back and forth then ricochet it off the wall" is what people normally do. If someone was trying to build a truly amazing foosball robot, they would most likely be better off using some physics simulations or treating the game as turn-based game where the offense has a plethora of complex actions to chose from, while the defense just has to block the ball. Maybe you can use Q-learning to train those complex actions! :)
+My goal with this project was to implement reinforcement learning in a physical environment and get it to work reasonably well. Physical environments are lot harder than simulations due to noise and uncertainty. Nonetheless, I think I've accomplished my goal and I have certainly learned a lot. However, the project is not without pitfalls. The agent certainly behaves as expected, but not without noticeable issues, a lot of which can be traced back to noise. Also the large action-space makes it difficult to calculate the next action quickly enough, but a faster computer would easily fix this. If I spend more time improving all aspects of this project (better foosball table, vision algorithm, faster computer, noise reduction), I can probably get the robot to always block an incoming ball, hit the ball forward, etc. But that's not necessarily how you play foosball, and what happens if the ball gets stuck in the corner (like it did in the video)? Of course I can improve my features, notice how none of my features even consider the enemy position, but I can only go so far with additional features. This is where my model starts to shows its weakness. In foosball, actions are much more complex than just "angle players forward". Real actions in foosball, are a string of actions in my model. For example, the action "slide the ball over then hit it" or "bounce the ball back and forth then ricochet it off the wall" is what people normally do. If someone was trying to build a truly amazing foosball robot, they would most likely be better off using some physics simulations or treating the game as turn-based game where the offense has a plethora of complex actions to chose from, while the defense just has to block the ball. Maybe you can use Q-learning to train those complex actions! :)
 
 [github]: http://www.github.com/somesaba/foosball
 [edx]: https://www.edx.org/course/uc-berkeleyx/uc-berkeleyx-cs188-1x-artificial-579
