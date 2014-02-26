@@ -6,6 +6,8 @@ category: posts
 
 # Introduction
 
+This is AI part of my foosball project. Be sure to check out [part 1][part1] and [part 2][part2]!
+
 From my (basic) understanding of machine learning there's the following:
 
 <ul>
@@ -127,7 +129,7 @@ $$
 \end{align}
 $$
 
-Policies are just the best action from a given state and Q-values represent actions! So policies should really be extracted from Q-values not state values. What if we learn the Q-values through sampling instead of the state values? What would the sample look like? Well since the value of a state is just is just the max of the Q-values, it's no surprise that they are very similar.
+Policies are just the best action from a given state and Q-values represent actions! So policies should really be extracted from Q-values not state values. What if we learn the Q-values through sampling instead of the state values? What would the sample look like? Well since the value of a state is just the max of the Q-values, it's no surprise that they are very similar.
 
 $$
 \begin{align}
@@ -182,7 +184,7 @@ $$
 \end{align}
 $$
 
-When you update the weights in step 3, you are essentially "correcting" them. The correction is the difference between what we thought the Q-value was for the action we took with the actual reward we received plus the best possible (discounted) Q-value for the new state. Those two numbers should be fairly close. You will also notice that we down-weight the correction by alpha, our learning rate and upscale the correction by the actual feature value. The larger (or more prominent) a feature is, the larger it is rewarded for doing good and harsher it is punished for doing bad.
+When you update the weights in step 4, you are essentially "correcting" them. The correction is the difference between what we thought the Q-value was for the action we took with the actual reward we received plus the best possible (discounted) Q-value for the new state. Those two numbers should be fairly close. You will also notice that we down-weight the correction by alpha, our learning rate and upscale the correction by the actual feature value. The larger (or more prominent) a feature is, the larger it is rewarded for doing good and harsher it is punished for doing bad.
 
 #Implementation
 
@@ -280,6 +282,8 @@ This video below shows some training matches. It is certainly far from perfect, 
 
 My goal with this project was to implement reinforcement learning in a physical environment and get it to work reasonably well. Physical environments are lot harder than simulations due to noise and uncertainty. Nonetheless, I think I've accomplished my goal and I have certainly learned a lot. However, the project is not without pitfalls. The agent certainly behaves as expected, but not without noticeable issues, a lot of which can be traced back to noise. Also the large action-space makes it difficult to calculate the next action quickly enough, but a faster computer would easily fix this. If I spend more time improving all aspects of this project (better foosball table, vision algorithm, faster computer, noise reduction), I can probably get the robot to always block an incoming ball, hit the ball forward, etc. But that's not necessarily how you play foosball, and what happens if the ball gets stuck in the corner (like it did in the video)? Of course I can improve my features, notice how none of my features even consider the enemy position, but I can only go so far with additional features. This is where my model starts to shows its weakness. In foosball, actions are much more complex than just "angle players forward". Real actions in foosball, are a string of actions in my model. For example, the action "slide the ball over then hit it" or "bounce the ball back and forth then ricochet it off the wall" is what people normally do. If someone was trying to build a truly amazing foosball robot, they would most likely be better off using some physics simulations or treating the game as turn-based game where the offense has a plethora of complex actions to chose from, while the defense just has to block the ball. Maybe you can use Q-learning to train those complex actions! :)
 
+[part1]: http://somesaba.github.io/posts/robot-foosball-pt1---intro-and-vision/
+[part2]: http://somesaba.github.io/posts/robot-foosball-pt2-mechanics-and-hardware/
 [github]: http://www.github.com/somesaba/foosball
 [edx]: https://www.edx.org/course/uc-berkeleyx/uc-berkeleyx-cs188-1x-artificial-579
 [mdp]: http://en.wikipedia.org/wiki/Markov_decision_process
