@@ -6,7 +6,7 @@ category: posts
 
 # Introduction
 
-This is AI part of my foosball project. Be sure to check out [part 1][part1] and [part 2][part2]!
+This is the AI part of my foosball project. Be sure to check out [part 1][part1] and [part 2][part2]!
 
 From my (basic) understanding of machine learning there's the following:
 
